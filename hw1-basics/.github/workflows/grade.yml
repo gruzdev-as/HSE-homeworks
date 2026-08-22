@@ -1,0 +1,39 @@
+name: Grade hw1-basics
+
+on:
+  push:
+    paths:
+      - "hw1-basics/**"
+  workflow_dispatch:
+
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout student repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r hw1-basics/requirements.txt
+
+      - name: Fetch hidden tests
+        env:
+          TESTS_TOKEN: ${{ secrets.TESTS_TOKEN }}
+        run: |
+          git clone --depth 1 \
+            "https://x-access-token:${TESTS_TOKEN}@github.com/gruzdev-as/hw1-tests.git" \
+            hidden_tests
+
+      - name: Run tests
+        run: |
+          cd hw1-basics
+          pytest --tb=no -q public_tests ../hidden_tests
+
+      - name: Remove hidden tests
+        if: always()
+        run: rm -rf hidden_tests

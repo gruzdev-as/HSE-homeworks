@@ -1,0 +1,19 @@
+[project]
+name = "hse-homeworks"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = ["ruff>=0.6"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+# PIE790: в шаблонах домашек "..." — намеренный плейсхолдер вместо TODO-тела
+# функции, а не лишний оператор.
+ignore = ["PIE790"]

@@ -1,0 +1,10 @@
+9:15 mktbot7 login
+19:05 mktbot7 export
+8:40 admin login
+19:45 mktbot7 export
+20:10 mktbot7 click
+7:30 mktbot7 login
+9:05 admin export
+21:00 mktbot7 export
+18:55 mktbot7 click
+9:00 mktbot7 login
