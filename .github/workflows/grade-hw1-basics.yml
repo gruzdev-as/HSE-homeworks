@@ -32,8 +32,24 @@ jobs:
       - name: Run tests
         run: |
           cd hw1-basics
-          pytest --tb=no -q public_tests ../hidden_tests
+          pytest --tb=no -q -m "not bonus" --junitxml=results.xml public_tests ../hidden_tests
+
+      - name: Report score
+        if: always()
+        run: python3 .github/scripts/report_score.py hw1-basics/results.xml --title "hw1-basics"
+
+      - name: Run bonus task (Vigenère cipher)
+        if: always()
+        continue-on-error: true
+        run: |
+          cd hw1-basics
+          pytest --tb=no -q -m bonus --junitxml=results-bonus.xml public_tests ../hidden_tests
+
+      - name: Report bonus score
+        if: always()
+        continue-on-error: true
+        run: python3 .github/scripts/report_score.py hw1-basics/results-bonus.xml --title "Бонус (шифр Виженера)"
 
       - name: Remove hidden tests
         if: always()
-        run: rm -rf hidden_tests
+        run: rm -rf hidden_tests hw1-basics/results.xml hw1-basics/results-bonus.xml
