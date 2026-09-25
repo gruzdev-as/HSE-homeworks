@@ -1,7 +1,7 @@
 """
 Задание 4. Валидация CTR.
 
-Финальный шаг — посчитать средний CTR по рекламным объявлениям. Часть
+Финальный шаг - посчитать средний CTR по рекламным объявлениям. Часть
 записей в выгрузке повреждена ИИ-ассистентом и должна быть исключена из
 расчёта.
 """
@@ -9,7 +9,7 @@
 
 def average_ctr(records: list[dict]) -> float:
     """
-    records — список словарей вида
+    records - список словарей вида
     {"ad_id": str, "impressions": int, "clicks": int}.
 
     Для каждой ЧИСТОЙ записи посчитать CTR = clicks / impressions и вернуть
@@ -33,7 +33,7 @@ def average_ctr(records: list[dict]) -> float:
 
 
 if __name__ == "__main__":
-    # Готовый код запуска — менять не нужно.
+    # Готовый код запуска - менять не нужно.
     import csv
 
     with open("data/task4_ads.csv", encoding="utf-8", newline="") as f:

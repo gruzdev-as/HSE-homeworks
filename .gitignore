@@ -16,5 +16,7 @@ CLAUDE.md
 # Референсные решения
 solutions/
 
-# Секретики! 
+# Секретики!
 .env
+_private
+hw*-tests

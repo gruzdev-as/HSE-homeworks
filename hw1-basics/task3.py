@@ -9,7 +9,7 @@
 
 def analyze_activity(user_ids: list[str]) -> tuple[dict[str, int], int, str]:
     """
-    По списку user_ids (одно действие — один id пользователя в списке)
+    По списку user_ids (одно действие - один id пользователя в списке)
     вернуть кортеж из трёх элементов:
 
       1. словарь {user_id: количество действий этого пользователя};
@@ -28,7 +28,7 @@ def analyze_activity(user_ids: list[str]) -> tuple[dict[str, int], int, str]:
 
 
 if __name__ == "__main__":
-    # Готовый код запуска — менять не нужно.
+    # Готовый код запуска - менять не нужно.
     with open("data/task3_users.txt", encoding="utf-8") as f:
         user_ids = [line.strip() for line in f if line.strip()]
 

@@ -36,7 +36,7 @@ jobs:
 
       - name: Report score
         if: always()
-        run: python3 .github/scripts/report_score.py hw1-basics/results.xml --title "hw1-basics"
+        run: python3 .github/scripts/report_score.py hw1-basics/results.xml --title "hw1-basics" --json scores/score.json
 
       - name: Run bonus task (Vigenère cipher)
         if: always()
@@ -48,7 +48,16 @@ jobs:
       - name: Report bonus score
         if: always()
         continue-on-error: true
-        run: python3 .github/scripts/report_score.py hw1-basics/results-bonus.xml --title "Бонус (шифр Виженера)"
+        run: python3 .github/scripts/report_score.py hw1-basics/results-bonus.xml --title "Бонус (шифр Виженера)" --json scores/score-bonus.json
+
+      # Только итоговые числа (score.json), без тестов и их вывода - для автоматического сбора оценок.
+      - name: Upload score
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: score-hw1-basics
+          path: scores/
+          retention-days: 90
 
       - name: Remove hidden tests
         if: always()
