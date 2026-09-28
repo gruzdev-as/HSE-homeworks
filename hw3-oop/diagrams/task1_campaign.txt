@@ -1,0 +1,26 @@
+class Campaign:
+    attrs:
+        name: str
+        budget: float
+        spend: float = 0.0
+        clicks: int = 0
+        impressions: int = 0
+    methods:
+        __init__(self, name: str, budget: float)
+
+        register_impression(self) -> None
+            # мутирует: impressions += 1
+
+        register_click(self) -> None
+            # мутирует: clicks += 1
+
+        ctr(self) -> float
+            # возвращает CTR в процентах (clicks / impressions * 100),
+            # ничего не сохраняет; 0.0, если impressions == 0
+
+        spend_amount(self, amount: float) -> None
+            # мутирует: spend += amount
+
+        is_active(self) -> bool
+            # возвращает spend < budget; вычисляется заново при КАЖДОМ
+            # вызове - не кешируйте результат в отдельном атрибуте

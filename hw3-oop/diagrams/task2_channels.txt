@@ -1,0 +1,46 @@
+class AdChannel:                        # базовый класс
+    attrs:
+        name: str
+        budget: float
+        clicks: int = 0
+    methods:
+        __init__(self, name: str, budget: float)
+
+        register_click(self) -> None
+            # мутирует: clicks += 1
+
+        cost_per_click(self) -> float
+            # возвращает budget / clicks; 0.0, если clicks == 0
+
+
+class EmailChannel(AdChannel):
+    attrs:
+        min_cost_per_click: float = 0.05
+    methods:
+        __init__(self, name: str, budget: float, min_cost_per_click: float = 0.05)
+            # не забудьте вызвать super().__init__(name, budget)!
+
+        cost_per_click(self) -> float
+            # переопределяет: max(cost_per_click() базового класса, min_cost_per_click)
+
+
+class SocialChannel(AdChannel):
+    attrs:
+        platform_fee: float = 0.10
+    methods:
+        __init__(self, name: str, budget: float, platform_fee: float = 0.10)
+            # не забудьте вызвать super().__init__(name, budget)!
+
+        cost_per_click(self) -> float
+            # переопределяет: cost_per_click() базового класса + platform_fee
+
+
+class SearchChannel(AdChannel):
+    attrs:
+        bid_multiplier: float = 1.2
+    methods:
+        __init__(self, name: str, budget: float, bid_multiplier: float = 1.2)
+            # не забудьте вызвать super().__init__(name, budget)!
+
+        cost_per_click(self) -> float
+            # переопределяет: cost_per_click() базового класса * bid_multiplier

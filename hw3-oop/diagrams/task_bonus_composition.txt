@@ -1,0 +1,36 @@
+Дополнение к Campaign (task1.py) для бонуса - добавьте эти два метода
+прямо в свой класс Campaign:
+
+class Campaign:                        # тот же класс, что в задании 1
+    methods (добавить):
+        __repr__(self) -> str
+            # читаемое представление, например:
+            # "Campaign(name='Search', budget=1000.0, spend=200.0)"
+
+        __eq__(self, other) -> bool
+            # два Campaign равны, если совпадают ВСЕ поля: name, budget,
+            # spend, clicks, impressions
+
+
+Новый класс - композиция вместо наследования (task_bonus.py):
+
+class CampaignWithChannels:
+    attrs:
+        campaign: Campaign
+        channels: list[AdChannel]
+            # ВАЖНО: создавайте этот список в __init__, а не в теле класса
+    methods:
+        __init__(self, campaign: Campaign)
+
+        add_channel(self, channel: AdChannel) -> None
+            # мутирует: добавляет channel в channels
+
+        total_cost(self) -> float
+            # возвращает сумму cost_per_click() * clicks по всем channels -
+            # делегируйте расчёт каналам, не пересчитывайте вручную
+
+        __repr__(self) -> str
+
+        __eq__(self, other) -> bool
+            # равны, если равны campaign (через его __eq__) и совпадают
+            # списки channels

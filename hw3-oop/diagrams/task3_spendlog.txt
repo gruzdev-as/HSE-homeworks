@@ -1,0 +1,22 @@
+class SpendLog:
+    attrs:
+        entries: list[dict]
+            # каждая запись: {"channel": str, "amount": float}
+            # ВАЖНО: создавайте этот список в __init__, а не в теле класса
+    methods:
+        __init__(self)
+
+        add_entry(self, channel: str, amount: float) -> None
+            # мутирует: добавляет запись в entries
+
+        total_spend(self) -> float
+            # возвращает сумму amount по всем записям
+
+        spend_by_channel(self, channel: str) -> float
+            # возвращает сумму amount по записям с данным channel;
+            # 0.0, если такого channel в entries нет
+
+        summary(self) -> str
+            # возвращает многострочный отчёт: для каждого канала (по
+            # алфавиту) строка "{channel}: {сумма:.2f}", последней строкой -
+            # "Итого: {общая сумма:.2f}"

@@ -1,9 +1,9 @@
-name: Grade hw1-basics
+name: Grade hw2-functions
 
 on:
   push:
     paths:
-      - "hw1-basics/**"
+      - "hw2-functions/**"
   workflow_dispatch:
 
 jobs:
@@ -19,48 +19,48 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: pip install -r hw1-basics/requirements.txt
+        run: pip install -r hw2-functions/requirements.txt
 
       - name: Fetch hidden tests
         env:
           TESTS_TOKEN: ${{ secrets.TESTS_TOKEN }}
         run: |
           git clone --depth 1 \
-            "https://x-access-token:${TESTS_TOKEN}@github.com/gruzdev-as/hw1-tests.git" \
+            "https://x-access-token:${TESTS_TOKEN}@github.com/gruzdev-as/hw2-tests.git" \
             hidden_tests
 
       # -rN: не печатать сводку с именами упавших тестов - имена скрытых тестов описывают
       # ловушки. --tb=no: не печатать ожидаемые значения. Балл считает report_score.py.
       - name: Run tests
         run: |
-          cd hw1-basics
+          cd hw2-functions
           pytest --tb=no -q -rN --continue-on-collection-errors -m "not bonus" --junitxml=results.xml public_tests ../hidden_tests
 
       - name: Report score
         if: always()
-        run: python3 .github/scripts/report_score.py hw1-basics/results.xml --tasks task1,task2,task3,task4,task5 --title "hw1-basics" --json scores/score.json
+        run: python3 .github/scripts/report_score.py hw2-functions/results.xml --tasks task1,task2,task3,task4 --title "hw2-functions" --json scores/score.json
 
-      - name: Run bonus task (Vigenère cipher)
+      - name: Run bonus task (memoize decorator)
         if: always()
         continue-on-error: true
         run: |
-          cd hw1-basics
+          cd hw2-functions
           pytest --tb=no -q -rN --continue-on-collection-errors -m bonus --junitxml=results-bonus.xml public_tests ../hidden_tests
 
       - name: Report bonus score
         if: always()
         continue-on-error: true
-        run: python3 .github/scripts/report_score.py hw1-basics/results-bonus.xml --tasks task6 --title "Бонус (шифр Виженера)" --json scores/score-bonus.json
+        run: python3 .github/scripts/report_score.py hw2-functions/results-bonus.xml --tasks task5 --title "Бонус (декоратор-кэш)" --json scores/score-bonus.json
 
       # Только итоговые числа (score.json), без тестов и их вывода - для автоматического сбора оценок.
       - name: Upload score
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: score-hw1-basics
+          name: score-hw2-functions
           path: scores/
           retention-days: 90
 
       - name: Remove hidden tests
         if: always()
-        run: rm -rf hidden_tests hw1-basics/results.xml hw1-basics/results-bonus.xml
+        run: rm -rf hidden_tests hw2-functions/results.xml hw2-functions/results-bonus.xml
